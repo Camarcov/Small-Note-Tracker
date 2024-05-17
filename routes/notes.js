@@ -1,4 +1,5 @@
 const notes = require('express').Router();
+//helper functinos
 const { v4: uuidv4 } = require('uuid');
 const {
     readFromFile,
@@ -6,10 +7,12 @@ const {
     writeToFile,
 } = require('../helpers/fsUtils');
 
+//GET route to display the notes on the left column database
 notes.get('/', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
 });
 
+//POST route for making a new note
 notes.post('/', (req, res) => {
     console.log(req.body)
 
@@ -29,6 +32,7 @@ notes.post('/', (req, res) => {
     }
 })
 
+//GET route for displaying single note on the right column
 notes.get('/:id', (req, res) => {
     const noteID = req.params.id;
     readFromFile('./db/db.json')
@@ -41,6 +45,8 @@ notes.get('/:id', (req, res) => {
         })
 });
 
+
+//DELETE route for removing notes
 notes.delete('/:id', (req, res) => {
     const notesId = req.params.id;
     console.log(req.params)
